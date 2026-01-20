@@ -23,6 +23,7 @@
         "php": ">= 7.4",
         "ext-json": "*",
         "guzzlehttp/guzzle": "^7.9",
+        "ramsey/uuid": "^4",
         "netresearch/jsonmapper": "^5.0"
     },
     "require-dev": {

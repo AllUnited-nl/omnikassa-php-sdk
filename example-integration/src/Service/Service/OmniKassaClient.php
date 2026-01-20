@@ -4,6 +4,7 @@ namespace OmniKassa\ExampleIntegration\Service\Service;
 
 use Carbon\CarbonImmutable;
 use nl\rabobank\gict\payments_savings\omnikassa_sdk\endpoint\Endpoint;
+use nl\rabobank\gict\payments_savings\omnikassa_sdk\model\Environment;
 use nl\rabobank\gict\payments_savings\omnikassa_sdk\model\request\InitiateRefundRequest;
 use nl\rabobank\gict\payments_savings\omnikassa_sdk\model\request\MerchantOrder;
 use nl\rabobank\gict\payments_savings\omnikassa_sdk\model\response\AnnouncementResponse;
@@ -24,8 +25,13 @@ class OmniKassaClient implements OmniKassaClientInterface
     private const CACHE_KEY_PREFIX = 'omnikassa_order_';
     private Endpoint $endpoint;
 
-    public function __construct(private CacheItemPoolInterface $cacheItemPool, string $baseUrl, TokenProviderInterface $tokenProvider, string $signingKey)
+    public function __construct(private CacheItemPoolInterface $cacheItemPool, bool $sandboxMode, TokenProviderInterface $tokenProvider, string $signingKey)
     {
+        $baseUrl = Environment::SANDBOX;
+        if (false === $sandboxMode) {
+            $baseUrl = Environment::PRODUCTION;
+        }
+
         $this->endpoint = Endpoint::createInstance(
             $baseUrl,
             new SigningKey($signingKey),

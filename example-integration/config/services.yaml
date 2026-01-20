@@ -11,7 +11,7 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         bind:
-          string $baseUrl: '%env(string:PAYMENT_BASE_URL)%'
+          bool $sandboxMode: '%env(bool:SANDBOX_MODE)%'
           string $refreshToken: '%env(REFRESH_TOKEN)%'
           string $signingKey: '%env(SIGNING_KEY)%'
           string $merchantReturnUrl: '%env(MERCHANT_RETURN_URL)%'
